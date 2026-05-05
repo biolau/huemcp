@@ -5,19 +5,59 @@ build-backend = "hatchling.build"
 [project]
 name = "huemcp"
 version = "0.1.0"
-description = "MCP server for controlling a Philips Hue bridge via the CLIP v2 API"
+description = "MCP server for controlling a Philips Hue bridge via the local CLIP v2 API"
+readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "Matt Bruton" }]
 requires-python = ">=3.10"
+keywords = [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "claude",
+    "philips-hue",
+    "hue",
+    "home-automation",
+    "smart-home",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Home Automation",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 dependencies = [
     "mcp>=1.2",
     "requests>=2.31",
     "python-dotenv>=1.0",
 ]
 
+[project.urls]
+Homepage = "https://github.com/mbruton/HueMCP"
+Repository = "https://github.com/mbruton/HueMCP"
+Issues = "https://github.com/mbruton/HueMCP/issues"
+
 [project.scripts]
 huemcp = "huemcp.server:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/huemcp"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "src/huemcp",
+    "scripts",
+    "README.md",
+    "LICENSE",
+    ".env.example",
+]
