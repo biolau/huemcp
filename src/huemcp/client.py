@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import os
 from functools import cached_property
+from pathlib import Path
 from typing import Any
 from urllib.parse import quote
 
@@ -34,7 +35,12 @@ class HueClient:
         timeout: float | None = None,
         user_agent: str = "HueMCP/0.1 (+local)",
     ):
+        # Load .env from the working directory (dev flow) and, by absolute
+        # path, from the repo root — so an MCP host that spawns the server
+        # from elsewhere still finds the bridge key without exporting it
+        # into the process environment. Explicit env vars win either way.
         load_dotenv()
+        load_dotenv(Path(__file__).resolve().parents[2] / ".env")
         host = host if host is not None else os.getenv("HUE_BRIDGE_HOST")
         if not host:
             raise HueError("HUE_BRIDGE_HOST is not set")
